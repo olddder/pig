@@ -1,5 +1,7 @@
 package com.pig4cloud.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.entity.User;
 import com.pig4cloud.mapper.UserMapper;
 import com.pig4cloud.service.UserService;
@@ -13,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	@Resource
 	private UserMapper userMapper;
 
-	public List<User> selectUserList(User user) {
-		return userMapper.selectUserList(user);
+	public IPage selectUserList(Page page, User user) {
+		return userMapper.selectUserList(page, user);
 	}
 }
