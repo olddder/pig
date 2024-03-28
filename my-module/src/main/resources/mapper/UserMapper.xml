@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pig4cloud.mapper.UserMapper">
+
+	<resultMap id="UserResultVo" type="com.pig4cloud.entity.User">
+		<id property="id" 			column="id"/>
+		<id property="ehrNo" 		column="ehr_no"/>
+		<id property="name" 		column="name"/>
+		<id property="brNo" 		column="br_no"/>
+		<id property="ehrStatus" 	column="ehr_status"/>
+	</resultMap>
+
+	<sql id="selectUserVO">
+		SELECT id, ehr_no, name, br_no, ehr_status
+		FROM user
+	</sql>
+
+	<select id="selectUserList" parameterType="com.pig4cloud.entity.User" resultMap="UserResultVo">
+		<include refid="selectUserVO"/>
+		<where>
+
+		</where>
+	</select>
+</mapper>
