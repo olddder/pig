@@ -9,12 +9,19 @@
 		<id property="name" 		column="name"/>
 		<id property="brNo" 		column="br_no"/>
 		<id property="ehrStatus" 	column="ehr_status"/>
+		<collection property="roleList" ofType="com.pig4cloud.entity.Role"
+					select="com.pig4cloud.mapper.RoleMapper.listRolesByUserId" column="ehr_no">
+		</collection>
 	</resultMap>
 
 	<sql id="selectUserVO">
 		SELECT id, ehr_no, name, br_no, ehr_status
-		FROM user
+		FROM pig_test.user
 	</sql>
+	<update id="updateById" parameterType="com.pig4cloud.entity.User">
+		update pig_test.user set ehr_status = #{ehrStatus}
+		where ehr_no = #{ehrNo}
+	</update>
 
 	<select id="selectUserList" parameterType="com.pig4cloud.entity.User" resultMap="UserResultVo">
 		<include refid="selectUserVO"/>

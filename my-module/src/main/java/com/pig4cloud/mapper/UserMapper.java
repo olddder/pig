@@ -11,4 +11,6 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 	IPage<User> selectUserList(Page page, @Param("query") User user);
+
+	void updateById(User user);
 }

@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface UserService {
 	public IPage selectUserList(Page page, User user);
+
+	Boolean updateUser(User user);
 }
