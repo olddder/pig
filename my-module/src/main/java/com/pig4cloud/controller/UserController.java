@@ -35,13 +35,22 @@ public class UserController {
 	}
 
 	/**
+	 * 通过ID查询用户信息
+	 * @param id ID
+	 * @return 用户信息
+	 */
+	@GetMapping("/details/{id}")
+	public R user(@PathVariable String id) {
+		return R.ok(userService.selectUserById(id));
+	}
+
+	/**
 	 * 更新用户信息
 	 * @param user 用户信息
 	 * @return R
 	 */
 	@PutMapping
 	public R updateUser(@Valid @RequestBody User user) {
-		System.out.println(user);
 		return R.ok(userService.updateUser(user));
 	}
 }

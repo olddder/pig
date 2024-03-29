@@ -8,25 +8,50 @@
 		<id property="ehrNo" 		column="ehr_no"/>
 		<id property="name" 		column="name"/>
 		<id property="brNo" 		column="br_no"/>
+		<id property="deptName" 		column="dept_name"/>
 		<id property="ehrStatus" 	column="ehr_status"/>
+		<id property="delFlag" 	column="del_flag"/>
 		<collection property="roleList" ofType="com.pig4cloud.entity.Role"
 					select="com.pig4cloud.mapper.RoleMapper.listRolesByUserId" column="ehr_no">
 		</collection>
 	</resultMap>
 
 	<sql id="selectUserVO">
-		SELECT id, ehr_no, name, br_no, ehr_status
-		FROM pig_test.user
+		SELECT id, ehr_no, u.name, br_no, ehr_status, d.name dept_name
+		FROM pig_test.user u
+		left join pig_test.dept d on u.br_no = d.dept_id
 	</sql>
-	<update id="updateById" parameterType="com.pig4cloud.entity.User">
-		update pig_test.user set ehr_status = #{ehrStatus}
-		where ehr_no = #{ehrNo}
+
+	<update id="updateUserByEhrNo">
+		UPDATE pig_test.user
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="brNo != null and brNo != ''">br_no = #{brNo},</if>
+			<if test="ehrStatus != null">ehr_status = #{ehrStatus},</if>
+		</trim>
+		WHERE ehr_no = #{ehrNo}
 	</update>
 
 	<select id="selectUserList" parameterType="com.pig4cloud.entity.User" resultMap="UserResultVo">
 		<include refid="selectUserVO"/>
 		<where>
-
+			u.del_flag = 0
+			<if test="query.name != null and query.name != ''">
+				<bind name="nameLike" value="'%'+query.name+'%'"/>
+				AND u.name LIKE #{query.name}
+			</if>
+			<if test="query.brNo != null and query.brNo != ''">
+				AND (u.br_no = #{query.brNo} OR u.br_no in (
+					select dept_id
+					from dept
+					where LOCATE(#{query.brNo}, ancestors) > 0
+				))
+			</if>
 		</where>
+	</select>
+	<select id="getUserById" resultMap="UserResultVo">
+		<include refid="selectUserVO"/>
+		WHERE
+        u.id = #{id} and u.del_flag = '0'
 	</select>
 </mapper>

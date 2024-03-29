@@ -4,22 +4,17 @@
 <mapper namespace="com.pig4cloud.mapper.RoleMapper">
 
 	<resultMap id="RoleResultVo" type="com.pig4cloud.entity.Role">
-		<id property="id" 			column="id"/>
+		<id property="roleCode"		column="role_code"/>
 		<id property="roleName" 	column="role_name"/>
 	</resultMap>
 
-	<sql id="selectUserVO">
-		SELECT id, ehr_no, name, br_no, ehr_status
-		FROM user
-	</sql>
-
 	<!-- 通过用户ID，查询角色信息-->
 	<select id="listRolesByUserId" resultMap="RoleResultVo">
-		SELECT role.id,
-			   role_name
+		SELECT role.role_code role_code,
+			   role.role_name role_name
 		FROM role,
 			 user_role
-		WHERE role.id = user_role.role_code
+		WHERE role.role_code = user_role.role_code
 		  and user_role.ehr_no = #{userId}
 	</select>
 </mapper>

@@ -1,16 +1,17 @@
 package com.pig4cloud.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 	IPage<User> selectUserList(Page page, @Param("query") User user);
 
-	void updateById(User user);
+	User getUserById(String id);
+
+	void updateUserByEhrNo(User user);
 }

@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.entity.User;
+import com.pig4cloud.mapper.RoleMapper;
 import com.pig4cloud.mapper.UserMapper;
 import com.pig4cloud.pig.admin.api.entity.SysUser;
 import com.pig4cloud.pig.admin.api.entity.SysUserPost;
 import com.pig4cloud.pig.admin.api.entity.SysUserRole;
 import com.pig4cloud.service.UserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +22,38 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl  extends ServiceImpl<UserMapper, User> implements UserService {
 	@Resource
 	private UserMapper userMapper;
+
+	@Resource
+	private RoleMapper roleMapper;
 
 	public IPage selectUserList(Page page, User user) {
 		return userMapper.selectUserList(page, user);
 	}
 
+
 	@Override
 	@Transactional
 	public Boolean updateUser(User user) {
+		System.out.println(user);
 		// 更新用户表信息
-		userMapper.updateById(user);
+		userMapper.updateUserByEhrNo(user);
+
+		// 更新用户角色表
+//		roleMapper.delete(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userDto.getUserId()));
+//		user.getRoleList().stream().map(roleId -> {
+//			SysUserRole userRole = new SysUserRole();
+//			userRole.setUserId(sysUser.getUserId());
+//			userRole.setRoleId(roleId);
+//			return userRole;
+//		}).forEach(SysUserRole::insert);
 		return Boolean.TRUE;
+	}
+
+	@Override
+	public User selectUserById(String id) {
+		return userMapper.getUserById(id);
 	}
 }
