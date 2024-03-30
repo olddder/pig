@@ -8,5 +8,4 @@
 		<id property="roleName" 	column="role_name"/>
 	</resultMap>
 
-
 </mapper>

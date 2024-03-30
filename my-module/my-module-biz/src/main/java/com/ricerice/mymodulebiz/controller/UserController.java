@@ -1,6 +1,8 @@
 package com.ricerice.mymodulebiz.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.pig4cloud.pig.common.log.annotation.SysLog;
+import com.ricerice.mymoduleapi.dto.UserDTO;
 import com.ricerice.mymodulebiz.service.UserService;
 import com.ricerice.mymoduleapi.entity.User;
 import com.pig4cloud.pig.common.core.util.R;
@@ -8,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springdoc.api.annotations.ParameterObject;
 import javax.annotation.Resource;
@@ -29,8 +32,19 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/list")
-	public R getUserList(@ParameterObject Page page, @ParameterObject User user){
+	public R getUserList(@ParameterObject Page page, @ParameterObject UserDTO user){
 		return R.ok(userService.selectUserList(page, user));
+	}
+
+	/**
+	 * 添加用户
+	 * @param userDTO 用户信息
+	 * @return success/false
+	 */
+	@SysLog("添加用户")
+	@PostMapping
+	public R user(@RequestBody UserDTO userDTO) {
+		return R.ok(userService.addUser(userDTO));
 	}
 
 	/**

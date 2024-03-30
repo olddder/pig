@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ricerice.mymodulebiz.mapper.UserMapper">
 
-	<resultMap id="UserResultVo" type="com.ricerice.mymoduleapi.entity.User">
+	<resultMap id="UserResultVo" type="com.ricerice.mymoduleapi.dto.UserDTO">
 		<id property="id" 			column="id"/>
 		<id property="ehrNo" 		column="ehr_no"/>
 		<id property="name" 		column="name"/>
@@ -32,7 +32,7 @@
 		WHERE ehr_no = #{ehrNo}
 	</update>
 
-	<select id="selectUserList" parameterType="com.ricerice.mymoduleapi.entity.User" resultMap="UserResultVo">
+	<select id="selectUserList" parameterType="com.ricerice.mymoduleapi.dto.UserDTO" resultMap="UserResultVo">
 		<include refid="selectUserVO"/>
 		<where>
 			u.del_flag = 0

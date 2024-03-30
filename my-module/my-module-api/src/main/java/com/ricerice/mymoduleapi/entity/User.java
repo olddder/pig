@@ -11,7 +11,5 @@ public class User {
 	private String name;
 	private String brNo;
 	private Integer ehrStatus;
-	private List<Role> roleList;
-	private String deptName;
 	private Integer delFlag;
 }

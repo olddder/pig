@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ricerice.mymodulebiz.mapper.UserRoleMapper">
+	<resultMap id="UserRoleVo" type="com.ricerice.mymoduleapi.entity.UserRole">
+		<id property="id"			column="id"/>
+		<id property="ehrNo" 		column="ehr_no"/>
+		<id property="roleCode" 	column="role_code"/>
+		<id property="active" 		column="active"/>
+	</resultMap>
+</mapper>
