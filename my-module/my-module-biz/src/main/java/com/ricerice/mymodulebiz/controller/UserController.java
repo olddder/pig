@@ -6,6 +6,7 @@ import com.ricerice.mymoduleapi.dto.UserDTO;
 import com.ricerice.mymodulebiz.service.UserService;
 import com.ricerice.mymoduleapi.entity.User;
 import com.pig4cloud.pig.common.core.util.R;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -49,12 +50,12 @@ public class UserController {
 
 	/**
 	 * 通过ID查询用户信息
-	 * @param id ID
+	 * @param userId ID
 	 * @return 用户信息
 	 */
-	@GetMapping("/details/{id}")
-	public R user(@PathVariable String id) {
-		return R.ok(userService.selectUserById(id));
+	@GetMapping("/details/{userId}")
+	public R user(@PathVariable Long userId) {
+		return R.ok(userService.selectUserById(userId));
 	}
 
 	/**
@@ -63,7 +64,20 @@ public class UserController {
 	 * @return R
 	 */
 	@PutMapping
-	public R updateUser(@Valid @RequestBody User user) {
-		return R.ok(userService.updateUser(user));
+	public R updateUser(@Valid @RequestBody UserDTO userDto) {
+		return R.ok(userService.updateUser(userDto));
 	}
+
+	/**
+	 * 删除用户信息
+	 * @param ids ID
+	 * @return R
+	 */
+	@SysLog("删除用户信息")
+	@DeleteMapping
+	@Operation(summary = "删除用户", description = "根据ID删除用户")
+	public R userDel(@RequestBody Long[] ids) {
+		return R.ok(userService.deleteUserByIds(ids));
+	}
+
 }

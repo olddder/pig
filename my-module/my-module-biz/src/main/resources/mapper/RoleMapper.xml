@@ -4,17 +4,19 @@
 <mapper namespace="com.ricerice.mymodulebiz.mapper.RoleMapper">
 
 	<resultMap id="RoleResultVo" type="com.ricerice.mymoduleapi.entity.Role">
+		<id property="roleId"		column="role_id"/>
 		<id property="roleCode"		column="role_code"/>
 		<id property="roleName" 	column="role_name"/>
+		<id property="roleDesc"		column="role_desc"/>
+		<id property="createTime" 	column="create_time"/>
 	</resultMap>
 
 	<!-- 通过用户ID，查询角色信息-->
 	<select id="listRolesByUserId" resultMap="RoleResultVo">
-		SELECT role.role_code role_code,
-			   role.role_name role_name
+		SELECT role.role_id, role.role_code role_code, role.role_name role_name
 		FROM role,
 			 user_role
 		WHERE role.role_code = user_role.role_code
-		  and user_role.ehr_no = #{userId}
+		  and user_role.ehr_no = #{ehrNo}
 	</select>
 </mapper>

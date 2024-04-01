@@ -4,20 +4,20 @@
 <mapper namespace="com.ricerice.mymodulebiz.mapper.UserMapper">
 
 	<resultMap id="UserResultVo" type="com.ricerice.mymoduleapi.dto.UserDTO">
-		<id property="id" 			column="id"/>
+		<id property="userId"		column="user_id"/>
 		<id property="ehrNo" 		column="ehr_no"/>
 		<id property="name" 		column="name"/>
 		<id property="brNo" 		column="br_no"/>
-		<id property="deptName" 		column="dept_name"/>
+		<id property="deptName"		column="dept_name"/>
 		<id property="ehrStatus" 	column="ehr_status"/>
-		<id property="delFlag" 	column="del_flag"/>
+		<id property="delFlag" 		column="del_flag"/>
 		<collection property="roleList" ofType="com.ricerice.mymoduleapi.entity.Role"
 					select="com.ricerice.mymodulebiz.mapper.RoleMapper.listRolesByUserId" column="ehr_no">
 		</collection>
 	</resultMap>
 
 	<sql id="selectUserVO">
-		SELECT id, ehr_no, u.name, br_no, ehr_status, d.name dept_name
+		SELECT user_id, ehr_no, u.name, br_no, ehr_status, d.name dept_name
 		FROM pig_test.user u
 		left join pig_test.dept d on u.br_no = d.dept_id
 	</sql>
@@ -35,7 +35,7 @@
 	<select id="selectUserList" parameterType="com.ricerice.mymoduleapi.dto.UserDTO" resultMap="UserResultVo">
 		<include refid="selectUserVO"/>
 		<where>
-			u.del_flag = 0
+			u.del_flag = '0'
 			<if test="query.name != null and query.name != ''">
 				<bind name="nameLike" value="'%'+query.name+'%'"/>
 				AND u.name LIKE #{query.name}
@@ -49,9 +49,10 @@
 			</if>
 		</where>
 	</select>
+
 	<select id="getUserById" resultMap="UserResultVo">
 		<include refid="selectUserVO"/>
 		WHERE
-        u.id = #{id} and u.del_flag = '0'
+        u.user_id = #{userId} and u.del_flag = '0'
 	</select>
 </mapper>
