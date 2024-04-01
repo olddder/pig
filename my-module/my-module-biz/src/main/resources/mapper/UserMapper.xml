@@ -38,7 +38,10 @@
 			u.del_flag = '0'
 			<if test="query.name != null and query.name != ''">
 				<bind name="nameLike" value="'%'+query.name+'%'"/>
-				AND u.name LIKE #{query.name}
+				AND u.name LIKE #{nameLike}
+			</if>
+			<if test="query.ehrNo != null and query.ehrNo != ''">
+				AND u.ehr_no = #{query.ehrNo}
 			</if>
 			<if test="query.brNo != null and query.brNo != ''">
 				AND (u.br_no = #{query.brNo} OR u.br_no in (

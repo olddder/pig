@@ -45,8 +45,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	@Resource
 	private UserRoleMapper userRoleMapper;
 
-	public IPage selectUserList(Page page, UserDTO user) {
-		return userMapper.selectUserList(page, user);
+	public IPage selectUserList(Page page, UserDTO userDto) {
+		return userMapper.selectUserList(page, userDto);
 	}
 
 	@Override

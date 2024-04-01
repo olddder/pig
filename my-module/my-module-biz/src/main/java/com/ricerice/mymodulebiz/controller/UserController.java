@@ -60,7 +60,7 @@ public class UserController {
 
 	/**
 	 * 更新用户信息
-	 * @param user 用户信息
+	 * @param userDto 用户信息
 	 * @return R
 	 */
 	@PutMapping
