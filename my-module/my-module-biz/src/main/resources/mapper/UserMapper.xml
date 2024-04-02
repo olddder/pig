@@ -22,16 +22,6 @@
 		left join pig_test.dept d on u.br_no = d.dept_id
 	</sql>
 
-	<update id="updateUserByEhrNo">
-		UPDATE pig_test.user
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="name != null and name != ''">name = #{name},</if>
-			<if test="brNo != null and brNo != ''">br_no = #{brNo},</if>
-			<if test="ehrStatus != null">ehr_status = #{ehrStatus},</if>
-		</trim>
-		WHERE ehr_no = #{ehrNo}
-	</update>
-
 	<select id="selectUserList" parameterType="com.ricerice.mymoduleapi.dto.UserDTO" resultMap="UserResultVo">
 		<include refid="selectUserVO"/>
 		<where>

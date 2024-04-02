@@ -15,5 +15,4 @@ public interface UserMapper extends BaseMapper<User> {
 
 	User getUserById(Long userId);
 
-	void updateUserByEhrNo(User user);
 }
